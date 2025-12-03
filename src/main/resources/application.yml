@@ -1,6 +1,7 @@
+
 spring:
   datasource:
-    url: jdbc:h2:mem:ecommerce
+    url: jdbc:h2:mem:ecommerce;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
     driverClassName: org.h2.Driver
     username: sa
     password:
@@ -8,8 +9,19 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
   h2:
     console:
       enabled: true
+      path: /h2-console
+
 server:
   port: 8080
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG

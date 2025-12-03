@@ -1,4 +1,8 @@
 package org.example.exception;
 
-public class InvalidOrderStatusException {
+public class InvalidOrderStatusException extends RuntimeException{
+
+    public InvalidOrderStatusException(String message){
+        super(message);
+    }
 }

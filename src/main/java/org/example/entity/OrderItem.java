@@ -2,6 +2,8 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -14,17 +16,19 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false) @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(optional = false) @JoinColumn(name = "product_id")
     private Product product;
 
+    @NotNull @Positive
     private Integer quantity;
 
+    @NotNull
     private BigDecimal unitPrice;
 
+    @NotNull
     private BigDecimal totalPrice;
-
 
 }

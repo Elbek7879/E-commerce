@@ -1,14 +1,20 @@
 package org.example.service;
 
-import org.example.entity.Product;
+import org.example.dto.request.ProductRequest;
+import org.example.dto.response.ProductResponse;
+import org.springframework.data.domain.*;
+
 import java.util.List;
 
 public interface ProductService {
 
-    List<Product> getAllProducts();
-    Product getProductById(Long id);
-    Product createProduct(Product product);
-    Product updateProduct(Long id, Product product);
+    Page<ProductResponse> getAllProducts(Pageable pageable);
+    ProductResponse getProductById(Long id);
+    ProductResponse createProduct(ProductRequest request);
+    ProductResponse updateProduct(Long id, ProductRequest request);
     void deleteProduct(Long id);
-    List<Product> searchProducts(String name, String category);
+    List<ProductResponse> searchProducts(String name, String category);
+
+
+
 }

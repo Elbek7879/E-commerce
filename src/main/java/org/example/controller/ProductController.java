@@ -1,49 +1,55 @@
 package org.example.controller;
 
-import org.example.entity.Product;
+import org.example.dto.request.ProductRequest;
+import org.example.dto.response.ProductResponse;
 import org.example.service.ProductService;
+import org.springframework.data.domain.*;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final ProductService productService;
+    private final ProductService service;
 
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
+    public ProductController(ProductService service) { this.service = service; }
 
     @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public Page<ProductResponse> getAll(@RequestParam(defaultValue = "0") int page,
+                                        @RequestParam(defaultValue = "10") int size) {
+        return service.getAllProducts(PageRequest.of(page, size));
     }
 
     @GetMapping("/{id}")
-    public Product getProduct(@PathVariable Long id) {
-        return productService.getProductById(id);
+    public ProductResponse getById(@PathVariable Long id) {
+        return service.getProductById(id);
     }
 
     @PostMapping
-    public Product createProduct(@RequestBody Product product) {
-        return productService.createProduct(product);
+    public ProductResponse create(@RequestBody @Valid ProductRequest request) {
+        return service.createProduct(request);
     }
 
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
-        return productService.updateProduct(id, product);
+    public ProductResponse update(@PathVariable Long id, @RequestBody @Valid ProductRequest request) {
+        return service.updateProduct(id, request);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
+    public void delete(@PathVariable Long id) {
+        service.deleteProduct(id);
     }
 
     @GetMapping("/search")
-    public List<Product> searchProducts(@RequestParam String name, @RequestParam String category) {
-        return productService.searchProducts(name, category);
+    public List<ProductResponse> search(@RequestParam(required = false) String name,
+                                        @RequestParam(required = false) String category) {
+        return service.searchProducts(name, category);
     }
+
+
+
 
 }
