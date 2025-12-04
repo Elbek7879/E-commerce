@@ -36,5 +36,10 @@ http://localhost:8080
 
 API dokumentatsiyasi (Swagger):
 http://localhost:8080/swagger-ui.html
+
+postman orqali ham tekshirish mumkin
+
+Unit test qilib ham tekshirish mumkin
   
+
 
